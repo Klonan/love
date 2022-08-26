@@ -67,3 +67,5 @@ libtool
 stamp-h1
 /src/love
 /src/tags
+/build*
+/.vscode*

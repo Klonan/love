@@ -91,20 +91,24 @@ extern "C"
 
 // Put the Lua code directly into a raw string literal.
 static const char arg_lua[] =
-#include "arg.lua"
-;
+{
+  #include "arg.lua"
+};
 
 static const char callbacks_lua[] =
-#include "callbacks.lua"
-;
+{
+  #include "callbacks.lua"
+};
 
 static const char boot_lua[] =
-#include "boot.lua"
-;
+{
+  #include "boot.lua"
+};
 
 static const char jit_setup_lua[] =
-#include "jitsetup.lua"
-;
+{
+  #include "jitsetup.lua"
+};
 
 // All modules define a c-accessible luaopen
 // so let's make use of those, instead

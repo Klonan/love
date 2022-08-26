@@ -43,8 +43,9 @@
 
 // Shove the wrap_Graphics.lua code directly into a raw string literal.
 static const char graphics_lua[] =
-#include "wrap_Graphics.lua"
-;
+{
+  #include "wrap_Graphics.lua"
+};
 
 namespace love
 {
@@ -352,7 +353,7 @@ int w_setCanvas(lua_State *L)
 		else
 			instance()->setRenderTarget();
 	});
-	
+
 	return 0;
 }
 

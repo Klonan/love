@@ -507,6 +507,21 @@ int w_Body_getLinearVelocityFromLocalPoint(lua_State *L)
 	return 2;
 }
 
+int w_Body_setMaxSpeed(lua_State *L)
+{
+	Body *t = luax_checkbody(L, 1);
+	float arg1 = (float)luaL_checknumber(L, 2);
+	t->setMaxSpeed(arg1);
+	return 0;
+}
+
+int w_Body_getMaxSpeed(lua_State *L)
+{
+	Body *t = luax_checkbody(L, 1);
+	lua_pushnumber(L, t->getMaxSpeed());
+	return 1;
+}
+
 int w_Body_isBullet(lua_State *L)
 {
 	Body *t = luax_checkbody(L, 1);
@@ -701,6 +716,8 @@ static const luaL_Reg w_Body_functions[] =
 	{ "getLocalPoints", w_Body_getLocalPoints },
 	{ "getLinearVelocityFromWorldPoint", w_Body_getLinearVelocityFromWorldPoint },
 	{ "getLinearVelocityFromLocalPoint", w_Body_getLinearVelocityFromLocalPoint },
+	{ "setMaxSpeed", w_Body_setMaxSpeed },
+	{ "getMaxSpeed", w_Body_getMaxSpeed },
 	{ "isBullet", w_Body_isBullet },
 	{ "setBullet", w_Body_setBullet },
 	{ "isActive", w_Body_isActive },

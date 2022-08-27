@@ -58,7 +58,6 @@ b2World::b2World(const b2Vec2& gravity)
 	m_stepComplete = true;
 
 	m_allowSleep = true;
-	m_maxSpeed = 0;
 	m_gravity = gravity;
 
 	m_newContacts = false;
@@ -389,12 +388,6 @@ void b2World::SetAllowSleeping(bool flag)
 			b->SetAwake(true);
 		}
 	}
-}
-
-//
-void b2World::SetMaxSpeed(float maxSpeed)
-{
-	m_maxSpeed = maxSpeed;
 }
 
 // Find islands, integrate and solve constraints, solve position constraints

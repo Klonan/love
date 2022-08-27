@@ -399,6 +399,16 @@ void Body::getLinearVelocityFromLocalPoint(float x, float y, float &x_o, float &
 	y_o = v.y;
 }
 
+void Body::setMaxSpeed(float maxSpeed)
+{
+	body->SetMaxSpeed(maxSpeed);
+}
+
+float Body::getMaxSpeed() const
+{
+	return body->GetMaxSpeed();
+}
+
 bool Body::isBullet() const
 {
 	return body->IsBullet();

@@ -57,6 +57,7 @@ struct B2_API b2BodyDef
 		position.Set(0.0f, 0.0f);
 		angle = 0.0f;
 		linearVelocity.Set(0.0f, 0.0f);
+		maxSpeed = 0.0f;
 		angularVelocity = 0.0f;
 		linearDamping = 0.0f;
 		angularDamping = 0.0f;
@@ -82,6 +83,9 @@ struct B2_API b2BodyDef
 
 	/// The linear velocity of the body's origin in world co-ordinates.
 	b2Vec2 linearVelocity;
+
+	/// Max speed of the body.
+	float maxSpeed;
 
 	/// The angular velocity of the body.
 	float angularVelocity;
@@ -183,6 +187,9 @@ public:
 	/// Set the linear velocity of the center of mass.
 	/// @param v the new linear velocity of the center of mass.
 	void SetLinearVelocity(const b2Vec2& v);
+
+	void SetMaxSpeed(float speed);
+	float GetMaxSpeed() const;
 
 	/// Get the linear velocity of the center of mass.
 	/// @return the linear velocity of the center of mass.
@@ -441,6 +448,7 @@ private:
 	b2Sweep m_sweep;		// the swept motion for CCD
 
 	b2Vec2 m_linearVelocity;
+	float m_maxSpeed;
 	float m_angularVelocity;
 
 	b2Vec2 m_force;
@@ -503,6 +511,16 @@ inline const b2Vec2& b2Body::GetLocalCenter() const
 inline const b2Vec2& b2Body::GetLinearVelocity() const
 {
 	return m_linearVelocity;
+}
+
+inline float b2Body::GetMaxSpeed() const
+{
+	return m_maxSpeed;
+}
+
+inline void b2Body::SetMaxSpeed(float maxSpeed)
+{
+	m_maxSpeed = maxSpeed;
 }
 
 inline void b2Body::SetAngularVelocity(float w)

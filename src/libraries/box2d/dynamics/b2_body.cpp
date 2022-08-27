@@ -79,6 +79,7 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 
 	SetLinearVelocity(bd->linearVelocity);
 	SetAngularVelocity(bd->angularVelocity);
+	SetMaxSpeed(bd->maxSpeed);
 
 	m_linearDamping = bd->linearDamping;
 	m_angularDamping = bd->angularDamping;
@@ -174,14 +175,13 @@ void b2Body::SetLinearVelocity(const b2Vec2& v)
 		SetAwake(true);
 	}
 
-	float maxSpeed = this->GetWorld()->GetMaxSpeed();
-	if (maxSpeed > 0)
+	if (m_maxSpeed > 0)
 	{
 		b2Vec2 vel = v;
-		if (vel.LengthSquared() > maxSpeed * maxSpeed)
+		if (vel.LengthSquared() > m_maxSpeed * m_maxSpeed)
 		{
 			vel.Normalize();
-			vel *= maxSpeed;
+			vel *= m_maxSpeed;
 		}
 		m_linearVelocity = vel;
 		return;

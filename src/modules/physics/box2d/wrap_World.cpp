@@ -123,24 +123,6 @@ int w_World_isSleepingAllowed(lua_State *L)
 	return 1;
 }
 
-int w_World_setMaxSpeed(lua_State *L)
-{
-	World *t = luax_checkworld(L, 1);
-	float speed = (float)luaL_checknumber(L, 2);
-	luax_catchexcept(L, [&](){ t->setMaxSpeed(speed); });
-	return 0;
-}
-
-int w_World_getMaxSpeed(lua_State *L)
-{
-	World *t = luax_checkworld(L, 1);
-	lua_remove(L, 1);
-	float speed = 0.0f;
-	luax_catchexcept(L, [&](){ speed = t->getMaxSpeed(); });
-	lua_pushnumber(L, speed);
-	return 1;
-}
-
 int w_World_isLocked(lua_State *L)
 {
 	World *t = luax_checkworld(L, 1);
@@ -247,8 +229,6 @@ static const luaL_Reg w_World_functions[] =
 	{ "translateOrigin", w_World_translateOrigin },
 	{ "setSleepingAllowed", w_World_setSleepingAllowed },
 	{ "isSleepingAllowed", w_World_isSleepingAllowed },
-	{ "getMaxSpeed", w_World_getMaxSpeed },
-	{ "setMaxSpeed", w_World_setMaxSpeed },
 	{ "isLocked", w_World_isLocked },
 	{ "getBodyCount", w_World_getBodyCount },
 	{ "getJointCount", w_World_getJointCount },

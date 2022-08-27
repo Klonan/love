@@ -351,6 +351,9 @@ public:
 	 **/
 	void getLinearVelocityFromLocalPoint(float x, float y, float &x_o, float &y_o);
 
+	void setMaxSpeed(float maxSpeed);
+	float getMaxSpeed() const;
+
 	/**
 	 * Returns true if the Body is a bullet, false otherwise.
 	 **/

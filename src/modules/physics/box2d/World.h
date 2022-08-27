@@ -296,9 +296,6 @@ public:
 	 **/
 	int rayCast(lua_State *L);
 
-	int setMaxSpeed(float speed);
-	int getMaxSpeed();
-
 	/**
 	 * Destroy this world.
 	 **/

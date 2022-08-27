@@ -77,8 +77,8 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 	m_prev = nullptr;
 	m_next = nullptr;
 
-	m_linearVelocity = bd->linearVelocity;
-	m_angularVelocity = bd->angularVelocity;
+	SetLinearVelocity(bd->linearVelocity);
+	SetAngularVelocity(bd->angularVelocity);
 
 	m_linearDamping = bd->linearDamping;
 	m_angularDamping = bd->angularDamping;
@@ -160,6 +160,34 @@ void b2Body::SetType(b2BodyType type)
 			broadPhase->TouchProxy(f->m_proxies[i].proxyId);
 		}
 	}
+}
+
+void b2Body::SetLinearVelocity(const b2Vec2& v)
+{
+	if (m_type == b2_staticBody)
+	{
+		return;
+	}
+
+	if (b2Dot(v, v) > 0.0f)
+	{
+		SetAwake(true);
+	}
+
+	float maxSpeed = this->GetWorld()->GetMaxSpeed();
+	if (maxSpeed > 0)
+	{
+		b2Vec2 vel = v;
+		if (vel.LengthSquared() > maxSpeed * maxSpeed)
+		{
+			vel.Normalize();
+			vel *= maxSpeed;
+		}
+		m_linearVelocity = vel;
+		return;
+	}
+
+	m_linearVelocity = v;
 }
 
 b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
@@ -345,7 +373,7 @@ void b2Body::ResetMassData()
 	m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
 	// Update center of mass velocity.
-	m_linearVelocity += b2Cross(m_angularVelocity, m_sweep.c - oldCenter);
+	SetLinearVelocity(m_linearVelocity + b2Cross(m_angularVelocity, m_sweep.c - oldCenter));
 }
 
 void b2Body::SetMassData(const b2MassData* massData)

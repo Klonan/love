@@ -291,11 +291,13 @@ public:
 	 **/
 	int getFixturesInArea(lua_State *L);
 
-
 	/**
 	 * Raycasts the World for all Fixtures in the path of the ray.
 	 **/
 	int rayCast(lua_State *L);
+
+	int setMaxSpeed(float speed);
+	int getMaxSpeed();
 
 	/**
 	 * Destroy this world.

@@ -422,7 +422,6 @@ private:
 
 	b2Body(const b2BodyDef* bd, b2World* world);
 	~b2Body();
-
 	void SynchronizeFixtures();
 	void SynchronizeTransform();
 
@@ -499,21 +498,6 @@ inline const b2Vec2& b2Body::GetWorldCenter() const
 inline const b2Vec2& b2Body::GetLocalCenter() const
 {
 	return m_sweep.localCenter;
-}
-
-inline void b2Body::SetLinearVelocity(const b2Vec2& v)
-{
-	if (m_type == b2_staticBody)
-	{
-		return;
-	}
-
-	if (b2Dot(v,v) > 0.0f)
-	{
-		SetAwake(true);
-	}
-
-	m_linearVelocity = v;
 }
 
 inline const b2Vec2& b2Body::GetLinearVelocity() const
@@ -809,8 +793,8 @@ inline void b2Body::ApplyLinearImpulse(const b2Vec2& impulse, const b2Vec2& poin
 	// Don't accumulate velocity if the body is sleeping
 	if (m_flags & e_awakeFlag)
 	{
-		m_linearVelocity += m_invMass * impulse;
-		m_angularVelocity += m_invI * b2Cross(point - m_sweep.c, impulse);
+		SetLinearVelocity(m_linearVelocity + (m_invMass * impulse));
+		SetAngularVelocity(m_angularVelocity + (m_invI * b2Cross(point - m_sweep.c, impulse)));
 	}
 }
 
@@ -829,7 +813,7 @@ inline void b2Body::ApplyLinearImpulseToCenter(const b2Vec2& impulse, bool wake)
 	// Don't accumulate velocity if the body is sleeping
 	if (m_flags & e_awakeFlag)
 	{
-		m_linearVelocity += m_invMass * impulse;
+		SetLinearVelocity(m_linearVelocity + (m_invMass * impulse));
 	}
 }
 

@@ -150,6 +150,10 @@ public:
 	void SetAllowSleeping(bool flag);
 	bool GetAllowSleeping() const { return m_allowSleep; }
 
+	/// Set/Get max velocity.
+	void SetMaxSpeed(float maxSpeed);
+	float GetMaxSpeed() const { return m_maxSpeed; }
+
 	/// Enable/disable warm starting. For testing.
 	void SetWarmStarting(bool flag) { m_warmStarting = flag; }
 	bool GetWarmStarting() const { return m_warmStarting; }
@@ -239,6 +243,7 @@ private:
 
 	b2Vec2 m_gravity;
 	bool m_allowSleep;
+	float m_maxSpeed;
 
 	b2DestructionListener* m_destructionListener;
 	b2Draw* m_debugDraw;

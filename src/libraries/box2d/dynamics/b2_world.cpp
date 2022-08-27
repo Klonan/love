@@ -58,6 +58,7 @@ b2World::b2World(const b2Vec2& gravity)
 	m_stepComplete = true;
 
 	m_allowSleep = true;
+	m_maxSpeed = 0;
 	m_gravity = gravity;
 
 	m_newContacts = false;
@@ -388,6 +389,12 @@ void b2World::SetAllowSleeping(bool flag)
 			b->SetAwake(true);
 		}
 	}
+}
+
+//
+void b2World::SetMaxSpeed(float maxSpeed)
+{
+	m_maxSpeed = maxSpeed;
 }
 
 // Find islands, integrate and solve constraints, solve position constraints
@@ -847,7 +854,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 					{
 						continue;
 					}
-					
+
 					// Add the other body to the island.
 					other->m_flags |= b2Body::e_islandFlag;
 
@@ -931,7 +938,7 @@ void b2World::Step(float dt, int32 velocityIterations, int32 positionIterations)
 	step.dtRatio = m_inv_dt0 * dt;
 
 	step.warmStarting = m_warmStarting;
-	
+
 	// Update contacts. This is where some contacts are destroyed.
 	{
 		b2Timer timer;

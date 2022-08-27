@@ -606,6 +606,17 @@ int World::rayCast(lua_State *L)
 	return 0;
 }
 
+int World::getMaxSpeed()
+{
+  return world->GetMaxSpeed();
+}
+
+int World::setMaxSpeed(float speed)
+{
+	world->SetMaxSpeed(speed);
+	return 0;
+}
+
 void World::destroy()
 {
 	if (world == nullptr)

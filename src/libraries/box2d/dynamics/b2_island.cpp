@@ -252,7 +252,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	{
 		contactSolver.WarmStart();
 	}
-	
+
 	for (int32 i = 0; i < m_jointCount; ++i)
 	{
 		m_joints[i]->InitVelocityConstraints(solverData);
@@ -337,8 +337,8 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 		b2Body* body = m_bodies[i];
 		body->m_sweep.c = m_positions[i].c;
 		body->m_sweep.a = m_positions[i].a;
-		body->m_linearVelocity = m_velocities[i].v;
-		body->m_angularVelocity = m_velocities[i].w;
+		body->SetLinearVelocity(m_velocities[i].v);
+		body->SetAngularVelocity(m_velocities[i].w);
 		body->SynchronizeTransform();
 	}
 
@@ -510,8 +510,8 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 		b2Body* body = m_bodies[i];
 		body->m_sweep.c = c;
 		body->m_sweep.a = a;
-		body->m_linearVelocity = v;
-		body->m_angularVelocity = w;
+		body->SetLinearVelocity(v);
+		body->SetAngularVelocity(w);
 		body->SynchronizeTransform();
 	}
 
@@ -530,7 +530,7 @@ void b2Island::Report(const b2ContactVelocityConstraint* constraints)
 		b2Contact* c = m_contacts[i];
 
 		const b2ContactVelocityConstraint* vc = constraints + i;
-		
+
 		b2ContactImpulse impulse;
 		impulse.count = vc->pointCount;
 		for (int32 j = 0; j < vc->pointCount; ++j)
